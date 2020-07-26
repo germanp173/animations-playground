@@ -10,8 +10,9 @@ jobs:
     env:
       CHRONOS_JOB: firebase-schedule-backend-chronos-us-central1
 
-    steps:   
-      - name: Check if should deploy
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check if Chronos should be disabled
         run: |
           npm run print | grep 'poseidon' && echo '::set-env name=DISABLE_CHRONOS::true'
 
