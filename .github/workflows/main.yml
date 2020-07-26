@@ -8,17 +8,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      chronos_job: firebase-schedule-backend-chronos-us-central1
-
+      CHRONOS_JOB: firebase-schedule-backend-chronos-us-central1
 
     steps:   
       - name: Check if should deploy
-        if: 'true'
-        run: echo '::set-env name=DEPLOY:true'
+        run: |
+          npm run print | grep 'poseidon' && echo '::set-env name=DISABLE_CHRONOS::true'
 
       - name: Build
-        run: echo Running job! $DEPLOY
+        run: echo Running job!
 
       - name: Deploy
-        if: ${{ $DEPLOY }}
-        run: echo Deploying - $chronos_job
+        run: |
+          if [ "$DISABLE_CHORNOS" == "true" ]; then echo 'Disabling $CHRONOS_JOB';fi
+          echo Deploying affected stuff
+          if [ "$DISABLE_CHORNOS" == "true" ]; then echo 'Enabling $CHRONOS_JOB';fi
+          
