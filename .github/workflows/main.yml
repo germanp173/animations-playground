@@ -13,7 +13,7 @@ jobs:
 
     steps:   
       - name: Check if should deploy
-        if: true 
+        if: 'true'
         run: echo '::set-env name=DEPLOY:true'
 
       - name: Build
