@@ -12,9 +12,9 @@ jobs:
 
     steps:   
       - uses: haya14busa/action-cond@v1
-        id: trigger_deploy
+        id: db_deployment
         with:
-          cond: (${{github.event.pull_request.merged}} && ${{!contains(github.event.pull_request.labels.*.name, 'no-release')}})
+          cond: $(npm run print | grep 'poseidon')
           if_true: true
           if_false: false
 
@@ -22,5 +22,5 @@ jobs:
         run: echo Running job!
 
       - name: Deploy
-        if: ${{ steps.trigger_deploy.outputs.value }}
+        if: ${{ steps.db_deployment.outputs.value }}
         run: echo Deploying - $chronos_job
