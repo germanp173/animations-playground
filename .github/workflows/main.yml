@@ -1,8 +1,8 @@
 name: Main
 
-on: 
+on:
   workflow_dispatch:
-
+  
 jobs:
   testing:
     runs-on: ubuntu-latest
@@ -10,17 +10,15 @@ jobs:
     env:
       chronos_job: firebase-schedule-backend-chronos-us-central1
 
+
     steps:   
-      - uses: haya14busa/action-cond@v1
-        id: db_deployment
-        with:
-          cond: $(npm run print | grep 'poseidons')
-          if_true: true
-          if_false: false
+      - name: Check if should deploy
+        if: true 
+        run: echo '::set-env name=DEPLOY:true'
 
       - name: Build
-        run: echo Running job!
+        run: echo Running job! $DEPLOY
 
       - name: Deploy
-        if: ${{ steps.db_deployment.outputs.value }}
+        if: $DEPLOY
         run: echo Deploying - $chronos_job
