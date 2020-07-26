@@ -21,7 +21,7 @@ jobs:
 
       - name: Deploy
         run: |
-          if [ "$DISABLE_CHORNOS" == "true" ]; then echo 'Disabling $CHRONOS_JOB';fi
+          if [ "$DISABLE_CHRONOS" == "true" ]; then echo 'Disabling $CHRONOS_JOB';fi
           echo Deploying affected stuff
-          if [ "$DISABLE_CHORNOS" == "true" ]; then echo 'Enabling $CHRONOS_JOB';fi
+          if [ "$DISABLE_CHRONOS" == "true" ]; then echo 'Enabling $CHRONOS_JOB';fi
           
