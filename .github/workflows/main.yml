@@ -1,0 +1,26 @@
+name: Main
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      chronos_job: firebase-schedule-backend-chronos-us-central1
+
+    steps:   
+      - uses: haya14busa/action-cond@v1
+        id: trigger_deploy
+        with:
+          cond: ${{ !contains(github.event.pull_request.labels.*.name, 'no-release') }}
+          if_true: true
+          if_false: false
+
+      - name: Build
+        run: echo Running job!
+
+      - name: Deploy
+        if: ${{ steps.trigger_deploy.outputs.value }}
+        run: echo Deploying - $chronos_job
